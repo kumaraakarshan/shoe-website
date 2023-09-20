@@ -1,3 +1,4 @@
+// AvailableShoes.js
 import React, { useState, useEffect } from "react";
 import Card from "../UI/Card";
 import classes from "./AvailableShoes.module.css";
@@ -45,6 +46,15 @@ const AvailableShoes = () => {
     setAvailableShoeSizes(initialSizes);
   }, []);
 
+  const updateSizesHandler = (shoeId, updatedSizes) => {
+    setAvailableShoeSizes((prevSizes) => {
+      return {
+        ...prevSizes,
+        [shoeId]: { ...updatedSizes },
+      };
+    });
+  };
+
   const ShoesList = DUMMY_SHOES.map((shoe) => (
     <ShoeItem
       key={shoe.id}
@@ -53,6 +63,7 @@ const AvailableShoes = () => {
       description={shoe.description}
       price={shoe.price}
       sizes={availableShoeSizes[shoe.id]} // Pass the available sizes to ShoeItem
+      updateSizes={updateSizesHandler} // Pass the function to ShoeItem
     />
   ));
 

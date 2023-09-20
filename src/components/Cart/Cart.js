@@ -15,30 +15,8 @@ const Cart = (props) => {
   };
 
   const placeOrderHandler = () => {
-    // Create a copy of the available sizes object from the cart context
-    const updatedAvailableSizes = { ...cartCtx.availableSizes };
-  
-    // Loop through the items in the cart
-    cartCtx.items.forEach((item) => {
-      const { size, quantity } = item;
-  
-      // Ensure the size exists in availableSizes and the quantity is valid
-      if (updatedAvailableSizes[size] !== undefined && quantity > 0) {
-        // Reduce the available quantity by the quantity in the cart
-        updatedAvailableSizes[size] -= quantity;
-      }
-    });
-  
-    // Update the available sizes in your cart context
-    cartCtx.updateAvailableSizes(updatedAvailableSizes);
-  
-    // Clear the cart
-    cartCtx.clearCart();
-  
-    // Show an alert for the successful order
-    alert("Order placed successfully!");
+    // Add your logic to place an order here
   };
-  
 
   const cartItems = (
     <ul className={classes["cart-items"]}>
@@ -87,7 +65,7 @@ const Cart = (props) => {
           Close
         </button>
         <button className={classes.button} onClick={placeOrderHandler}>
-          Order
+          Place Order
         </button>
       </div>
     </Modal>

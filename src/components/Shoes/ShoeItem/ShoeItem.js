@@ -1,22 +1,29 @@
-import React from "react";
+// ShoeItem.js
+import React, { useEffect } from "react";
 import classes from "./ShoeItem.module.css";
 import ShoeItemForm from "./ShoeItemForm";
 
 const ShoeItem = (props) => {
-  const price = `Rs. ${props.price.toFixed(2)}`;
-  const { name, description, sizes } = props;
+  const { id, name, description, price, sizes = {}, updateSizes } = props;
 
-  // Add a conditional check for sizes
-  if (!sizes) {
-    return null; // or some fallback UI if sizes is not defined
-  }
+  useEffect(() => {
+    // Ensure sizes is initialized as an empty object if not provided
+    const newSizes = { ...sizes };
+    
+    if (newSizes.small > 0) {
+      newSizes.small -= 1; // Reduce the quantity of the "small" size by 1
+      updateSizes(id, newSizes);
+    }
+  }, [id, sizes, updateSizes]);
+
+  const formattedPrice = `Rs. ${price.toFixed(2)}`;
 
   return (
     <li className={classes.Shoe}>
       <div>
         <h3>{name}</h3>
         <div className={classes.description}>{description}</div>
-        <div className={classes.price}>{price}</div>
+        <div className={classes.price}>{formattedPrice}</div>
         <div className={classes.sizes}>
           <h4>Available Sizes:</h4>
           <ul>
@@ -29,7 +36,7 @@ const ShoeItem = (props) => {
         </div>
       </div>
       <div>
-        <ShoeItemForm id={props.id} item={props} sizes={props.sizes} />
+        <ShoeItemForm id={id} item={props} sizes={sizes} />
       </div>
     </li>
   );
